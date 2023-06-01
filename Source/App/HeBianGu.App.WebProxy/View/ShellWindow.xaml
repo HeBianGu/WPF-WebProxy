@@ -1,0 +1,612 @@
+﻿<h:MainWindow x:Class="HeBianGu.App.WebProxy.ShellWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:h="https://github.com/HeBianGu"
+              xmlns:local="clr-namespace:HeBianGu.App.WebProxy"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:system="clr-namespace:System;assembly=mscorlib"
+              Title="H-Fiddler"
+              Width="1300"
+              Height="800"
+              h:Cattach.Icon=""
+              CaptionBackground="{DynamicResource {x:Static h:BrushKeys.Dark0_2}}"
+              CaptionForeground="{DynamicResource {x:Static h:BrushKeys.ForegroundDefault}}"
+              CaptionHeight="65"
+              DataContext="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel}"
+              Icon="{DynamicResource {x:Static h:ImageSourceKeys.Logo}}"
+              mc:Ignorable="d">
+    <!--  Computer Aided Design  -->
+    <h:Cattach.CaptionCenterTemplate>
+        <ControlTemplate>
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       IsHitTestVisible="False"
+                       Text="{Binding Source={x:Static h:ProjectService.Instance}, Path=Current.Title}" />
+        </ControlTemplate>
+    </h:Cattach.CaptionCenterTemplate>
+
+    <h:Cattach.CaptionLeftTemplate>
+        <ControlTemplate>
+            <AdornerDecorator>
+                <DockPanel LastChildFill="False">
+                    <h:PropertyGrid Margin="0"
+                                    Padding="0"
+                                    VerticalAlignment="Center"
+                                    Background="Transparent"
+                                    SelectObject="{Binding}"
+                                    Style="{DynamicResource {x:Static h:PropertyGrid.ClearlyKey}}"
+                                    UseGroupNames="操作,文件">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <DockPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="{x:Type h:CommandPropertyItem}">
+                                <Button Width="25"
+                                        Height="25"
+                                        h:Cattach.Icon="{Binding Icon}"
+                                        h:Cattach.IconSize="14"
+                                        h:Cattach.UseGuide="True"
+                                        Command="{Binding Value}"
+                                        CommandParameter="{Binding CommandParameter}"
+                                        Content="{Binding Name}"
+                                        Style="{DynamicResource {x:Static h:ButtonKeys.AccentBackTransparent}}"
+                                        ToolTip="{Binding Description}" />
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                    </h:PropertyGrid>
+
+
+                    <Button Width="25"
+                            Height="25"
+                            Margin="0"
+                            h:Cattach.Icon="{x:Static h:Icons.Redo}"
+                            h:Cattach.IconSize="{DynamicResource {x:Static h:IconSizeKeys.Small}}"
+                            h:VipAttach.Level="1"
+                            Style="{DynamicResource {x:Static h:ButtonKeys.AccentBackTransparent}}">
+                        <h:Interaction.Behaviors>
+                            <h:LoadedAdornerBehavior AdornerType="{x:Type h:VipAdorner}" />
+                        </h:Interaction.Behaviors>
+                    </Button>
+                </DockPanel>
+            </AdornerDecorator>
+        </ControlTemplate>
+    </h:Cattach.CaptionLeftTemplate>
+
+    <DockPanel Grid.Row="1">
+        <!--<ToolBarTray DockPanel.Dock="Top">
+            <ToolBar ItemsSource="{Binding ElementName=box, Path=CommandBindings}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="2"
+                                Padding="10,6"
+                                h:Cattach.Icon="{Binding Command.Icon}"
+                                Command="{Binding Command}"
+                                CommandTarget="{Binding ElementName=box}"
+                                Content="{Binding Command.Text}"
+                                Style="{DynamicResource {x:Static h:ButtonKeys.Icon}}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ToolBar>
+        </ToolBarTray>-->
+        <h:OutlookBar Width="250"
+                      MaxWidth="300"
+                      DockPanel.Dock="Left"
+                      Header="Outlook Bar"
+                      IsButtonSplitterVisible="True"
+                      IsCloseButtonVisible="False"
+                      IsMaximized="False"
+                      IsOverflowVisible="True"
+                      IsPopupVisible="False"
+                      MaxNumberOfButtons="2"
+                      NavigationPaneText="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedSection.Header}"
+                      SelectedSectionIndex="0"
+                      ShowButtons="True"
+                      ShowSideButtons="True">
+            <h:OutlookBar.Sections>
+                <h:OutlookSection h:Cattach.CornerRadius="0" h:Cattach.Icon="&#xe812;" Header="Projects">
+                    <h:ProjectListBox>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Margin="0,10"
+                                               Text="{Binding Model.Title}"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTip="{Binding Model.Title}" />
+                                    <Button Margin="-5"
+                                            VerticalAlignment="Center"
+                                            Command="{x:Static h:Commander.Clear}"
+                                            CommandParameter="{Binding Model}"
+                                            DockPanel.Dock="Right"
+                                            Style="{DynamicResource {x:Static h:ButtonKeys.CloseFlag}}"
+                                            Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsMouseOver, Converter={x:Static h:XConverter.BooleanToVisibilityConverter}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </h:ProjectListBox>
+                </h:OutlookSection>
+                <h:OutlookSection h:Cattach.CornerRadius="0" h:Cattach.Icon="&#xe7d4;" Header="Requests">
+                    <StackPanel>
+                        <h:OdcExpander Margin="0"
+                                       Header="Number of Buttons"
+                                       IsExpanded="True"
+                                       ShowEllipse="False">
+                            <StackPanel>
+                                <Button Margin="4">Show More Buttons</Button>
+                                <Button Margin="4">Show Fewer Buttons</Button>
+                            </StackPanel>
+                        </h:OdcExpander>
+                        <h:OdcExpander Margin="0" Header="Skins">
+                            <StackPanel>
+                                <Button Content="Outlook Blue" />
+                                <Button Content="Outlook Silver" />
+                                <Button Content="Outlook Black" />
+                            </StackPanel>
+                        </h:OdcExpander>
+                    </StackPanel>
+                </h:OutlookSection>
+            </h:OutlookBar.Sections>
+            <h:OutlookBar.OptionButtons>
+                <ToggleButton Width="100" Content="我是勾选按钮" />
+                <Button Width="100">我是按钮</Button>
+            </h:OutlookBar.OptionButtons>
+        </h:OutlookBar>
+        <h:OutlookBar Width="350"
+                      Margin="0,4,4,4"
+                      DockPanel.Dock="Right"
+                      DockPosition="Right"
+                      IsCloseButtonVisible="False"
+                      IsMaximized="False"
+                      MaxNumberOfButtons="3"
+                      NavigationPaneText="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedSection.Header}"
+                      ShowButtons="True">
+            <h:OutlookBar.Sections>
+                <h:OutlookSection h:Cattach.Icon="&#xe786;" Header="OverView">
+                    <ScrollViewer>
+                        <ItemsControl>
+                            <h:OdcExpander Margin="0"
+                                           Padding="0"
+                                           Header="Session Details"
+                                           IsExpanded="False"
+                                           ShowEllipse="False">
+                                <h:PropertyGrid h:Cattach.ItemMinHeight="30"
+                                                SelectObject="{Binding SelectedSession, IsAsync=True}"
+                                                Style="{DynamicResource {x:Static h:PropertyGrid.ClearlyKey}}"
+                                                UseDeclaredOnly="True"
+                                                UsePropertyView="True" />
+                            </h:OdcExpander>
+                            <h:OdcExpander Margin="0"
+                                           Padding="0"
+                                           Header="Request Details"
+                                           IsExpanded="False">
+                                <h:PropertyGrid h:Cattach.ItemMinHeight="30"
+                                                SelectObject="{Binding SelectedSession.HttpClient.Request}"
+                                                Style="{DynamicResource {x:Static h:PropertyGrid.ClearlyKey}}"
+                                                UseClass="False"
+                                                UseDeclaredOnly="True"
+                                                UsePropertyView="True" />
+                            </h:OdcExpander>
+                            <h:OdcExpander Margin="0"
+                                           Padding="0"
+                                           Header="Response Details"
+                                           IsExpanded="False">
+                                <h:PropertyGrid h:Cattach.ItemMinHeight="30"
+                                                SelectObject="{Binding SelectedSession.HttpClient.Response, IsAsync=True}"
+                                                Style="{DynamicResource {x:Static h:PropertyGrid.ClearlyKey}}"
+                                                UseClass="False"
+                                                UseDeclaredOnly="True"
+                                                UsePropertyView="True" />
+                            </h:OdcExpander>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </h:OutlookSection>
+                <h:OutlookSection h:Cattach.Icon="&#xe787;" Header="Inspectors">
+                    <UniformGrid Columns="1">
+                        <GroupBox Margin="0,2"
+                                  Padding="0"
+                                  h:Cattach.CaptionBackground="Transparent"
+                                  h:Cattach.CaptionBorderThickness="1 0 0 1"
+                                  h:Cattach.CaptionForeground="{DynamicResource {x:Static h:BrushKeys.ForegroundAssist}}"
+                                  h:Cattach.CaptionHeight="{DynamicResource {x:Static h:SystemKeys.ItemHeight}}"
+                                  h:Cattach.CornerRadius="0"
+                                  Header="&gt; Request">
+                            <h:Cattach.CaptionRightTemplate>
+                                <ControlTemplate>
+                                    <TextBlock Margin="5,0"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header7}}"
+                                               TextTrimming="CharacterEllipsis">
+                                        <Run Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.RequestUri}" />
+                                        <Run Text="HTTP" />
+                                        <Run Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.HttpVersion}" />
+                                        <!--<Run Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.}" />-->
+                                        <!--<Run Text="http://vorsx.data.microsoft.com:443" />
+                                        <Run Text="HTTP/1.1" />
+                                        <Run Text="CONNECT" />-->
+                                    </TextBlock>
+                                </ControlTemplate>
+                            </h:Cattach.CaptionRightTemplate>
+                            <TabControl h:Cattach.CaptionBackground="Transparent"
+                                        h:Cattach.ItemHeight="{DynamicResource {x:Static h:SystemKeys.ItemHeight}}"
+                                        h:Cattach.SelectBackground="Transparent"
+                                        h:Cattach.UseSearch="False"
+                                        BorderThickness="0"
+                                        Style="{DynamicResource {x:Static h:TabControlKeys.Line}}">
+                                <TabItem Header="Headers">
+                                    <DataGrid x:Name="dg_header"
+                                              Margin="0"
+                                              BorderThickness="0"
+                                              ColumnHeaderHeight="30"
+                                              ItemsSource="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.Headers}"
+                                              RowHeight="30">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Binding="{Binding Name}" Header="Key" />
+                                            <DataGridTextColumn Width="*" Binding="{Binding Value}" Header="Value" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <!--<TabItem Header="Params(2)">
+                                    <DataGrid x:Name="dg_params"
+                                              Margin="0"
+                                              h:Cattach.ItemHeight="30"
+                                              BorderThickness="0"
+                                              ColumnHeaderHeight="30"
+                                              ItemsSource="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.Body.p}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Binding="{Binding Name}" Header="Key" />
+                                            <DataGridTextColumn Width="*" Binding="{Binding Value}" Header="Value" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem Header="Cookies(2)">
+                                    <DataGrid Margin="0" BorderThickness="0" ColumnHeaderHeight="30">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Header="Key" />
+                                            <DataGridTextColumn Width="*" Header="Value" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>-->
+                                <TabItem Header="Raw">
+                                    <!--<TextBlock>
+                                        CONNECT vortex.data.microsoft.com:443 HTTP/1.1
+                                        Host: vortex.data.microsoft.com
+                                        Proxy-Connection: Keep-Alive
+                                        A SSLv3-compatible ClientHello handshake was found. Fiddler extracted the parameters below.
+                                    </TextBlock>-->
+                                    <ScrollViewer>
+                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request, IsAsync=True}" />
+                                    </ScrollViewer>
+                                </TabItem>
+                                <TabItem Header="Body">
+                                    <ScrollViewer>
+                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.BodyString, IsAsync=True}" TextWrapping="Wrap" />
+                                    </ScrollViewer>
+                                    <!--<TabControl h:Cattach.ItemHeight="Auto" h:Cattach.UseSearch="False" BorderThickness="0">
+                                        <TabItem Header="Text">
+                                            <TextBlock Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.BodyString}" />
+                                        </TabItem>
+                                        <TabItem Header="JSON" />
+                                        <TabItem Header="HEX" />
+                                        <TabItem Header="From-Data" />
+                                        <TabItem Header="XML" />
+                                        <TabItem Header="JavaScript" />
+                                    </TabControl>-->
+                                </TabItem>
+                            </TabControl>
+                        </GroupBox>
+                        <GroupBox Padding="0"
+                                  h:Cattach.CaptionBackground="Transparent"
+                                  h:Cattach.CaptionBorderThickness="1 0 0 1"
+                                  h:Cattach.CaptionForeground="{DynamicResource {x:Static h:BrushKeys.ForegroundAssist}}"
+                                  h:Cattach.CaptionHeight="{DynamicResource {x:Static h:SystemKeys.ItemHeight}}"
+                                  h:Cattach.CornerRadius="0"
+                                  Header="&gt; Response">
+                            <h:Cattach.CaptionRightTemplate>
+                                <ControlTemplate>
+                                    <TextBlock Margin="5,0"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Center"
+                                               FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header7}}"
+                                               TextTrimming="CharacterEllipsis">
+                                        <Run Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.RequestUri}" />
+                                        <Run Text="HTTP" />
+                                        <Run Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.HttpVersion}" />
+                                    </TextBlock>
+                                </ControlTemplate>
+                            </h:Cattach.CaptionRightTemplate>
+                            <TabControl h:Cattach.CaptionBackground="Transparent"
+                                        h:Cattach.ItemHeight="{DynamicResource {x:Static h:SystemKeys.ItemHeight}}"
+                                        h:Cattach.SelectBackground="Transparent"
+                                        h:Cattach.UseSearch="False"
+                                        BorderThickness="0"
+                                        Style="{DynamicResource {x:Static h:TabControlKeys.Line}}">
+                                <TabItem Header="Headers">
+                                    <DataGrid Margin="0"
+                                              h:Cattach.ItemMinHeight="0"
+                                              h:Cattach.ItemVerticalAlignment="Top"
+                                              h:Cattach.ItemVerticalContentAlignment="Center"
+                                              BorderThickness="0"
+                                              ColumnHeaderHeight="30"
+                                              ItemsSource="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Response.Headers}"
+                                              MinRowHeight="10"
+                                              RowHeight="30">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Binding="{Binding Name}" Header="Key" />
+                                            <DataGridTextColumn Width="*" Binding="{Binding Value}" Header="Value" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <!--<TabItem Header="Params(2)">
+                                    <DataGrid Margin="0" BorderThickness="0" ColumnHeaderHeight="30">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Header="Key" />
+                                            <DataGridTextColumn Width="*" Header="Value" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem Header="Cookies(2)">
+                                    <DataGrid Margin="0" BorderThickness="0" ColumnHeaderHeight="30">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Width="*" Header="Key" />
+                                            <DataGridTextColumn Width="*" Header="Value" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>-->
+                                <TabItem Header="Raw">
+                                    <ScrollViewer>
+                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Response, IsAsync=True}" />
+                                    </ScrollViewer>
+                                </TabItem>
+                                <TabItem Header="Body">
+                                    <ScrollViewer>
+                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Response.BodyString, IsAsync=True}" TextWrapping="Wrap" />
+                                    </ScrollViewer>
+                                </TabItem>
+                            </TabControl>
+                        </GroupBox>
+
+                    </UniformGrid>
+                </h:OutlookSection>
+                <h:OutlookSection h:Cattach.Icon="&#xe7f3;" Header="Triggers">
+                    <DockPanel>
+                        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+                            <Button Style="{DynamicResource {x:Static h:ButtonKeys.AddCircle}}" DockPanel.Dock="Right"/>
+                            <CheckBox Content="全选" DockPanel.Dock="Left"/>
+                        </DockPanel>
+                        <ItemsControl ItemsSource="{Binding Triggers}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" ToolTip="{Binding Description}" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DockPanel>
+                </h:OutlookSection>
+            </h:OutlookBar.Sections>
+        </h:OutlookBar>
+
+        <Grid>
+            <TabControl Margin="0,0"
+                        Padding="0"
+                        h:Cattach.UseSearch="False"
+                        BorderThickness="0">
+                <TabItem Height="35">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Margin="5,0"
+                                           VerticalAlignment="Center"
+                                           FontSize="15"
+                                           Style="{DynamicResource {x:Static h:TextBlockKeys.Icon}}"
+                                           Text="{x:Static h:Icons.Eye}" />
+                                <TextBlock VerticalAlignment="Center" FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header6}}" Text="Live Traffic" />
+                                <TextBlock x:Name="tb_status" VerticalAlignment="Center" />
+                                <Viewbox Height="15">
+                                    <h:SwitchToggleButton IsChecked="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning, Mode=TwoWay}">
+                                        <h:Interaction.Triggers>
+                                            <h:EventTrigger EventName="Checked">
+                                                <h:InvokeCommandAction Command="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.StartCommand}" />
+                                            </h:EventTrigger>
+                                            <h:EventTrigger EventName="Unchecked">
+                                                <h:InvokeCommandAction Command="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.StopCommand}" />
+                                            </h:EventTrigger>
+                                        </h:Interaction.Triggers>
+                                    </h:SwitchToggleButton>
+                                </Viewbox>
+                            </DockPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning}" Value="True">
+                                    <Setter TargetName="tb_status" Property="Text" Value="（Capturing）" />
+                                    <Setter TargetName="tb_status" Property="Foreground" Value="{DynamicResource {x:Static h:BrushKeys.Green}}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning}" Value="False">
+                                    <Setter TargetName="tb_status" Property="Text" Value="（Paused）" />
+                                    <Setter TargetName="tb_status" Property="Foreground" Value="{DynamicResource {x:Static h:BrushKeys.ForegroundAssist}}" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+
+                    <DockPanel>
+                        <DockPanel Height="{DynamicResource {x:Static h:SystemKeys.RowHeight}}"
+                                   Margin="0,2"
+                                   DockPanel.Dock="Top"
+                                   LastChildFill="False">
+
+                            <ContentControl Content="{Binding Conditionable}"/>
+                            <!--<Button Width="100"
+                                    Margin="1,0"
+                                    h:Cattach.CornerRadius="{DynamicResource {x:Static h:CornerRadiusKeys.Left}}"
+                                    h:Cattach.Icon="{x:Static h:IconAll.Filter}"
+                                    h:Cattach.IconMargin="5 0"
+                                    h:Cattach.IconSize="12"
+                                    h:Cattach.UseMouseOverScale="False"
+                                    Command="{Binding FilterCommand}"
+                                    Content="Filters">
+                            </Button>
+                            <ToggleButton x:Name="tb_filter"
+                                          Width="25"
+                                          Margin="0"
+                                          h:Cattach.CheckedIcon="{x:Static h:IconAll.Right}"
+                                          h:Cattach.CornerRadius="{DynamicResource {x:Static h:CornerRadiusKeys.Right}}"
+                                          h:Cattach.IconMargin="2 0"
+                                          h:Cattach.MouseOverBorderThickness="0"
+                                          h:Cattach.UncheckedIcon="{x:Static h:IconAll.Down}"
+                                          h:Cattach.UseMouseOverScale="False"
+                                          Background="{DynamicResource {x:Static h:BrushKeys.ForegroundMouseOver}}"
+                                          Style="{DynamicResource {x:Static h:ToggleButtonKeys.Default}}" />-->
+
+                            <Button h:Cattach.Icon="{x:Static h:IconAll.IE}"
+                                    h:Cattach.IconMargin="5 0"
+                                    h:Cattach.IconSize="12"
+                                    Command="{Binding OpenIECommand}"
+                                    Content="Open Browser" />
+                            <Button h:Cattach.Icon="{x:Static h:IconAll.Close}"
+                                    h:Cattach.IconMargin="5 0"
+                                    h:Cattach.IconSize="12"
+                                    Command="{x:Static h:Commander.DeleteAll}"
+                                    CommandTarget="{Binding ElementName=pdg}"
+                                    Content="Remove All" />
+                            <ToggleButton x:Name="tb_more"
+                                          Width="{DynamicResource {x:Static h:SystemKeys.ItemHeight}}"
+                                          Margin="5,0"
+                                          h:Cattach.Icon="{x:Static h:IconAll.More1}"
+                                          BorderBrush="{DynamicResource {x:Static h:BrushKeys.BorderBrushDefault}}"
+                                          BorderThickness="1"
+                                          DockPanel.Dock="Right"
+                                          Style="{DynamicResource {x:Static h:ToggleButtonKeys.Default}}" />
+
+                            <Button Margin="5,0"
+                                    h:Cattach.Icon="&#xe7d4;"
+                                    BorderBrush="{DynamicResource {x:Static h:BrushKeys.BorderBrushDefault}}"
+                                    BorderThickness="1"
+                                    Command="{x:Static h:Commander.Setting}"
+                                    CommandTarget="{Binding ElementName=pdg}"
+                                    DockPanel.Dock="Right"
+                                    Style="{DynamicResource {x:Static h:ButtonKeys.Icon}}"
+                                    ToolTip="表格设置" />
+
+                            <TextBox Width="220"
+                                     h:Cattach.Watermark="1211"
+                                     DockPanel.Dock="Right"
+                                     Style="{DynamicResource {x:Static h:TextBoxKeys.Search}}"
+                                     Text="{Binding ElementName=pdg, Path=FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" DockPanel.Dock="Right">
+                                <Run Text="Client Count" />
+                                <Run FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header5}}" Foreground="{DynamicResource {x:Static h:BrushKeys.Green}}" Text="{Binding ClientConnectionCount}" />
+                            </TextBlock>
+
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" DockPanel.Dock="Right">
+                                <Run Text="Server Count" />
+                                <Run FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header5}}" Foreground="{DynamicResource {x:Static h:BrushKeys.Green}}" Text="{Binding ServerConnectionCount}" />
+                            </TextBlock>
+                        </DockPanel>
+
+                        <Popup Height="Auto"
+                               AllowsTransparency="True"
+                               IsOpen="{Binding ElementName=tb_more, Path=IsChecked}"
+                               PlacementTarget="{Binding ElementName=tb_more}"
+                               StaysOpen="False"
+                               VerticalOffset="10">
+                            <MenuItem Command="{Binding SaveProjectCommand}" Header="Save Project" />
+                        </Popup>
+
+                        <!--<Popup Height="Auto"
+                               AllowsTransparency="True"
+                               IsOpen="{Binding ElementName=tb_filter, Path=IsChecked}"
+                               PlacementTarget="{Binding ElementName=tb_filter}"
+                               StaysOpen="False"
+                               VerticalOffset="10">
+                            <Border Background="{DynamicResource {x:Static h:BrushKeys.BackgroundDefault}}" BorderBrush="{DynamicResource {x:Static h:BrushKeys.BorderBrushDefault}}" BorderThickness="1">
+                                <DockPanel MinWidth="200">
+                                    <Button h:Cattach.Icon="{x:Static h:Icons.Delete}"
+                                            h:Cattach.IconSize="12"
+                                            Command="{Binding PropertyConfidtions.ClearSelectionCommand}"
+                                            Content="Clear Filter"
+                                            DockPanel.Dock="Bottom"
+                                            Style="{DynamicResource {x:Static h:ButtonKeys.Transparent}}" />
+                                    <Separator DockPanel.Dock="Bottom" />
+                                    <ListBox h:Cattach.ItemMargin="0" ItemsSource="{Binding PropertyConfidtions.PropertyConfidtions}" SelectedItem="{Binding PropertyConfidtions.SelectedItem}">
+                                        <h:Interaction.Triggers>
+                                            <h:EventTrigger EventName="SelectionChanged">
+                                                <h:InvokeCommandAction Command="{Binding FilterChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Popup}}" />
+                                            </h:EventTrigger>
+                                        </h:Interaction.Triggers>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <DockPanel>
+                                                    <TextBlock Margin="0,0,10,0"
+                                                               FontSize="15"
+                                                               Style="{DynamicResource {x:Static h:TextBlockKeys.Icon}}"
+                                                               Text="&#xe759;"
+                                                               Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected, Converter={x:Static h:Converter.GetFalseToHidden}}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding ID}" />
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ListBox>
+                                </DockPanel>
+                            </Border>
+                        </Popup>-->
+
+                        <h:PagedDataGrid x:Name="pdg"
+                                         Margin="0"
+                                         Padding="1"
+                                         HorizontalAlignment="Stretch"
+                                         AutoGenerateColumns="False"
+                                         BorderThickness="0"
+                                         DataSource="{Binding Sessions}"
+                                         PageCount="15"
+                                         SelectedItem="{Binding SelectedSession}"
+                                         UseAsync="False"
+                                         UsePageCount="False"
+                                         UseSearch="False">
+                            <DataGrid.Columns>
+                                <h:CheckBoxDataGridColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
+                                    <h:CheckBoxDataGridColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Command="{x:Static h:Commander.CheckAll}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=h:PagedDataGrid}}" />
+                                        </DataTemplate>
+                                    </h:CheckBoxDataGridColumn.HeaderTemplate>
+                                </h:CheckBoxDataGridColumn>
+                                <h:RowNumTextDataGridColumn Width="50" Header="#" />
+                                <DataGridTextColumn Binding="{Binding Protocol}" Header="Protocol" />
+                                <DataGridTextColumn Binding="{Binding Method}" Header="Method" />
+                                <DataGridTextColumn Binding="{Binding Host}" Header="Host" />
+                                <DataGridTextColumn Binding="{Binding Url}" Header="Url" />
+                                <DataGridTextColumn Binding="{Binding StatusCode}" Header="Status Code" />
+                                <DataGridTextColumn Binding="{Binding BodySize}" Header="Body Size" />
+                                <DataGridTextColumn Binding="{Binding Process}" Header="Process" />
+                                <DataGridTextColumn Binding="{Binding SentDataCount}" Header="Sent Bytes" />
+                                <DataGridTextColumn Binding="{Binding ReceivedDataCount}" Header="ReceivedBytes" />
+                                <DataGridTextColumn Binding="{Binding ClientRemoteEndPoint}" Header="Client IP" />
+                                <DataGridTextColumn Binding="{Binding ClientConnectionId}" Header="Client Id" Visibility="Collapsed" />
+                                <DataGridTextColumn Binding="{Binding ServerConnectionId}" Header="Server Id" Visibility="Collapsed" />
+                            </DataGrid.Columns>
+                        </h:PagedDataGrid>
+                    </DockPanel>
+                </TabItem>
+                <!--<TabItem Width="150">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Margin="5,0"
+                                           VerticalAlignment="Center"
+                                           FontSize="15"
+                                           Style="{DynamicResource {x:Static h:TextBlockKeys.Icon}}"
+                                           Text="{x:Static h:IconAll.Cmd}" />
+                                <TextBlock VerticalAlignment="Center" FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header5}}" Text="Composer" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                </TabItem>-->
+            </TabControl>
+        </Grid>
+    </DockPanel>
+</h:MainWindow>

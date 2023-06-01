@@ -1,0 +1,283 @@
+﻿<h:ApplicationBase x:Class="HeBianGu.App.WebProxy.App"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:h="https://github.com/HeBianGu"
+                   xmlns:local="clr-namespace:HeBianGu.App.WebProxy">
+    <h:ApplicationBase.Resources>
+        <ResourceDictionary>
+            <local:DataSourceLocator x:Key="S.DataSource.Locator" />
+
+            <Style BasedOn="{StaticResource {x:Static h:ExpanderKeys.Clear}}" TargetType="Expander">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="HeaderTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <TextBlock FontSize="{DynamicResource {x:Static h:FontSizeKeys.Default}}" Text="{Binding}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--<DataTemplate DataType="{x:Type h:DiagramTemplateGroup}">
+                <ListBox h:Cattach.ItemMargin="5"
+                         ItemsSource="{Binding Collection, IsAsync=True}"
+                         SelectedItem="{Binding SelectedItem}"
+                         Style="{DynamicResource {x:Static h:ListBoxKeys.Dynamic}}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="150"
+                                    Height="150"
+                                    h:VipAttach.Level="{Binding Vip}"
+                                    Style="{DynamicResource {x:Static h:BorderKeys.CardBorderBrush}}">
+                                <Grid>
+                                    <DockPanel>
+                                        <h:Row DockPanel.Dock="Bottom">
+                                            <TextBlock Grid.ColumnSpan="12"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Text="{Binding Name}" />
+                                        </h:Row>
+                                        <Border Background="{DynamicResource {x:Static h:BrushKeys.AccentMouseOverBackground}}" ClipToBounds="True" CornerRadius="{DynamicResource {x:Static h:CornerRadiusKeys.CornerRadius}}">
+                                            <Image Source="{Binding BitmapData, Converter={x:Static h:XConverter.StringToImageSourceConverter}}" Stretch="Fill" />
+                                        </Border>
+                                    </DockPanel>
+                                </Grid>
+                                <h:Interaction.Behaviors>
+                                    <h:LoadedAdornerBehavior AdornerType="{x:Type h:VipAdorner}" />
+                                </h:Interaction.Behaviors>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource {x:Static h:ListBoxItemKeys.Clear}}" TargetType="ListBoxItem">
+                            <Setter Property="Height" Value="Auto" />
+                            <Setter Property="Width" Value="Auto" />
+                            <Setter Property="Margin" Value="5" />
+                            <Setter Property="Padding" Value="0" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type h:DiagramTemplate}">
+                <ContentPresenter Content="{Binding Diagram}"/>
+                --><!--<Grid Background="{DynamicResource {x:Static h:BrushKeys.Dark0_2}}" DataContext="{Binding Diagram}">
+                    <h:DiagraphBox x:Name="db"
+                                   AllowDrop="false"
+                                   Foreground="{DynamicResource {x:Static h:BrushKeys.ForegroundAssist}}"
+                                   GridBackground="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=GridBackground}"
+                                   GridLineBrush="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=GridLineBrush}"
+                                   GridMargin="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=GridMargin}"
+                                   Scale="{Binding ElementName=svt1, Path=Scale}"
+                                   SmallSplitValue="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=SmallSplit}"
+                                   SplitBrush="{DynamicResource {x:Static h:BrushKeys.ForegroundAssist}}"
+                                   SplitValue="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=LargeSplit}"
+                                   UseBottom="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseBottom}"
+                                   UseLeft="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseLeft}"
+                                   UseRight="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseRight}"
+                                   UseSmallSplitVerticalLine="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseSmallSplitVerticalLine}"
+                                   UseSmallSpliteHorizontalLine="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseSmallSpliteHorizontalLine}"
+                                   UseSplitHorizontalLine="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseSplitHorizontalLine}"
+                                   UseSplitVerticalLine="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseSplitVerticalLine}"
+                                   UseText="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseText}"
+                                   UseTop="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=UseTop}" />
+                    <Border Margin="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=GridMargin}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="Transparent">
+                        <h:ScrollViewerTransfor x:Name="svt1"
+                                                AllowDrop="False"
+                                                Background="Transparent"
+                                                IsFullParent="False">
+                            <h:Interaction.Behaviors>
+                                <h:MouseGestureScrollViewerBehavior ChangeButton="Middle" />
+                                <h:ViewportSynchronizerBehavior HorizontalOffset="{Binding ElementName=db, Path=StartX}" VerticalOffset="{Binding ElementName=db, Path=StartY}" />
+                            </h:Interaction.Behaviors>
+                            <h:Diagram x:Name="diagram"
+                                       Width="{Binding Width}"
+                                       Height="{Binding Height}"
+                                       Padding="0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       HorizontalContentAlignment="Stretch"
+                                       VerticalContentAlignment="Stretch"
+                                       h:Cattach.GuideData="从左侧资源列表中拖动元素放置此区域，选中元素在右侧属性栏和上方工具栏执行相应操作，鼠标拖拽、滚轮放大缩小等"
+                                       h:Cattach.GuideTitle="绘图区域"
+                                       h:Cattach.UseGuide="True"
+                                       AllowDrop="True"
+                                       BorderBrush="{DynamicResource {x:Static h:BrushKeys.Accent}}"
+                                       BorderThickness="1"
+                                       Layout="{Binding Layout}"
+                                       LinkDrawer="{Binding LinkDrawer}"
+                                       NodesSource="{Binding Nodes}"
+                                       SelectedPart="{Binding SelectedPart}"
+                                       UseAnimation="False">
+                                <h:Diagram.Background>
+                                    <SolidColorBrush Opacity="0.02" Color="Gray" />
+                                </h:Diagram.Background>
+
+                                --><!--<h:Diagram.DynamicLinkStyle>
+                                                            <Style BasedOn="{StaticResource {x:Static h:Link.DashKey}}" TargetType="h:Link">
+                                                                <Setter Property="PathStyle">
+                                                                    <Setter.Value>
+                                                                        <Style TargetType="{x:Type Path}">
+                                                                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.DynamicStyle.Stroke}" />
+                                                                            <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.DynamicStyle.Fill}" />
+                                                                            <Setter Property="StrokeThickness" Value="1.2" />
+                                                                            <Setter Property="StrokeDashArray" Value="5 2" />
+                                                                            <Setter Property="StrokeThickness" Value="2" />
+                                                                            <Setter Property="StrokeDashCap" Value="Round" />
+                                                                            <Setter Property="StrokeLineJoin" Value="Round" />
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=h:Link}, Path=(h:Part.IsDragEnter)}" Value="True">
+                                                                                    <Setter Property="Opacity" Value="{DynamicResource {x:Static h:OpacityKeys.Disable}}" />
+                                                                                    <Setter Property="Stroke" Value="Orange" />
+                                                                                    <Setter Property="Fill" Value="Orange" />
+                                                                                    <Setter Property="StrokeThickness" Value="3" />
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=h:Link}, Path=(h:Part.IsCanDrop)}" Value="True">
+                                                                                    <Setter Property="Opacity" Value="1" />
+                                                                                    <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.DynamicCanDropStyle.Stroke}" />
+                                                                                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.DynamicCanDropStyle.Fill}" />
+                                                                                    <Setter Property="Effect" Value="{DynamicResource {x:Static h:EffectShadowKeys.Default3}}" />
+                                                                                    <Setter Property="StrokeThickness" Value="3" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </h:Diagram.DynamicLinkStyle>
+                                                        <h:Diagram.LinkStyle>
+                                                            <Style BasedOn="{StaticResource {x:Static h:Link.DefaultKey}}" TargetType="h:Link">
+                                                                <Setter Property="PathStyle">
+                                                                    <Setter.Value>
+                                                                        <Style TargetType="{x:Type Path}">
+                                                                            <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.LinkStyle.Stroke}" />
+                                                                            <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.LinkStyle.Fill}" />
+                                                                            <Setter Property="StrokeThickness" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.LinkStyle.StrokeThickness}" />
+                                                                            <Setter Property="StrokeDashCap" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.Linktyle.StrokeDashCap}" />
+                                                                            <Setter Property="StrokeLineJoin" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.Linktyle.StrokeLineJoin}" />
+                                                                            <Setter Property="StrokeDashArray" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.Linktyle.StrokeDashArray}" />
+                                                                            <Setter Property="StrokeDashOffset" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.Linktyle.StrokeDashOffset}" />
+                                                                            <Setter Property="StrokeEndLineCap" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.Linktyle.StrokeEndLineCap}" />
+                                                                            <Setter Property="StrokeStartLineCap" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.Linktyle.StrokeStartLineCap}" />
+                                                                            <Setter Property="StrokeMiterLimit" Value="{Binding RelativeSource={RelativeSource AncestorType=h:Diagram}, Path=DataContext.Linktyle.StrokeMiterLimit}" />
+                                                                            <Style.Triggers>
+                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                    <Setter Property="StrokeThickness" Value="5" />
+                                                                                    <Setter Property="Stroke" Value="Green" />
+                                                                                    <Setter Property="Fill" Value="Green" />
+                                                                                </Trigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </h:Diagram.LinkStyle>
+                                                        <h:Diagram.NodeStyle>
+                                                            <Style BasedOn="{StaticResource {x:Static h:Node.DefaultKey}}" TargetType="h:Node">
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter Property="Effect" Value="{DynamicResource {x:Static h:EffectShadowKeys.Default2}}" />
+                                                                        <Setter Property="Cursor" Value="SizeAll" />
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsSelected" Value="True">
+                                                                        <Setter Property="Effect" Value="{DynamicResource {x:Static h:DiagramEffectKey.IsSelected}}" />
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsDragging" Value="True">
+                                                                        <Setter Property="Effect" Value="{DynamicResource {x:Static h:EffectShadowKeys.Default4}}" />
+                                                                    </Trigger>
+                                                                    <Trigger Property="h:Node.IsDragEnter" Value="True">
+                                                                        <Setter Property="Effect" Value="{DynamicResource {x:Static h:DiagramEffectKey.IsDragEnter}}" />
+                                                                    </Trigger>
+                                                                    <Trigger Property="h:Node.IsCanDrop" Value="True">
+                                                                        <Setter Property="Effect" Value="{DynamicResource {x:Static h:DiagramEffectKey.IsCanDrop}}" />
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </h:Diagram.NodeStyle>-->
+
+                                <!--<h:Diagram.Background>
+                                                            <DrawingBrush RenderOptions.CachingHint="Cache"
+                                                                          Stretch="Uniform"
+                                                                          TileMode="Tile"
+                                                                          Viewport="0 0 25 25"
+                                                                          ViewportUnits="Absolute">
+                                                                <DrawingBrush.Drawing>
+                                                                    <DrawingGroup>
+                                                                        <GeometryDrawing Brush="{DynamicResource {x:Static h:BrushKeys.Dark0}}">
+                                                                            <GeometryDrawing.Geometry>
+                                                                                <RectangleGeometry Rect="0 0 100 100" />
+                                                                            </GeometryDrawing.Geometry>
+                                                                        </GeometryDrawing>
+
+                                                                        <GeometryDrawing Brush="{DynamicResource {x:Static h:BrushKeys.Dark0_4}}">
+                                                                            <GeometryDrawing.Geometry>
+                                                                                <RectangleGeometry Rect="0 0 50 50" />
+                                                                            </GeometryDrawing.Geometry>
+                                                                        </GeometryDrawing>
+
+                                                                        <GeometryDrawing Brush="{DynamicResource {x:Static h:BrushKeys.Dark0_4}}">
+                                                                            <GeometryDrawing.Geometry>
+                                                                                <RectangleGeometry Rect="50 50 50 50" />
+                                                                            </GeometryDrawing.Geometry>
+                                                                        </GeometryDrawing>
+                                                                    </DrawingGroup>
+
+                                                                </DrawingBrush.Drawing>
+                                                            </DrawingBrush>
+                                                        </h:Diagram.Background>--><!--
+
+                                <h:Interaction.Behaviors>
+                                    --><!--<h:DiagramAddLinkBehavior />-->
+                                    <!--<h:DynimacLinkPortBehavior />--><!--
+                                    <h:DiagramDropTextNodeBehavior NodeType="{Binding NodeType}" />
+                                    --><!--<h:DynimacLinkNodeBehavior/>--><!--
+                                </h:Interaction.Behaviors>
+                                <h:Interaction.Triggers>
+                                    <h:EventTrigger EventName="ItemsChanged">
+                                        <h:InvokeCommandAction Command="{Binding ItemsChangedCommand}" PassEventArgsToCommand="True" />
+                                    </h:EventTrigger>
+                                    <h:EventTrigger EventName="SelectedPartChanged">
+                                        <h:InvokeCommandAction Command="{Binding SelectedPartChangedCommand}" PassEventArgsToCommand="True" />
+                                    </h:EventTrigger>
+                                </h:Interaction.Triggers>
+                            </h:Diagram>
+                        </h:ScrollViewerTransfor>
+                    </Border>
+                    <Grid Width="150"
+                          Height="150"
+                          Margin="0,0,0,0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Bottom"
+                          h:Cattach.GuideData="使用点击位置定位绘图、拖动区域平移、点击放大、缩小、定位等操作来操作绘图区域"
+                          h:Cattach.GuideTitle="鹰眼图"
+                          h:Cattach.UseGuide="True"
+                          h:TransitionService.IsVisible="{Binding ProjectData.SystemSet.IsLocatorVisible}">
+                        <h:ScrollViewerLocator x:Name="locator" MaskBackground="{DynamicResource {x:Static h:BrushKeys.BackgroundDefault}}" ScrollViewer="{Binding ElementName=svt1}" />
+
+                        <h:TransitionService.VisibleActions>
+                            <h:TransitionCollection>
+                                <h:TranslateTransition HiddenOrCollapsed="Collapsed" StartPoint="200,0" EndPoint="100,0" />
+                            </h:TransitionCollection>
+                        </h:TransitionService.VisibleActions>
+                    </Grid>
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=GridBackground}" Value="{x:Null}">
+                        <Setter TargetName="db" Property="GridBackground" Value="{DynamicResource {x:Static h:BrushKeys.BackgroundDefault}}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Source={x:Static h:DiagramSetting.Instance}, Path=GridLineBrush}" Value="{x:Null}">
+                        <Setter TargetName="db" Property="GridLineBrush" Value="{DynamicResource {x:Static h:BrushKeys.BorderBrushDefault}}" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>--><!--
+            </DataTemplate>-->
+        </ResourceDictionary>
+    </h:ApplicationBase.Resources>
+</h:ApplicationBase>
