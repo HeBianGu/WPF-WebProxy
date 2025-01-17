@@ -1,13 +1,8 @@
 ﻿using HeBianGu.Base.WpfBase;
 using HeBianGu.Control.Filter;
-using HeBianGu.Control.LayerBox;
-using HeBianGu.Control.PropertyGrid;
-using HeBianGu.General.WpfControlLib;
 using HeBianGu.Service.AppConfig;
 using HeBianGu.Systems.Project;
-using HeBianGu.Systems.XmlSerialize;
 using HeBianGu.WebProxy.Titanium;
-using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

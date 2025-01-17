@@ -14,11 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HeBianGu.Base.WpfBase" Version="5.0.0" />
+    <PackageReference Include="HeBianGu.Window.MessageDialog" Version="5.0.0" />
     <PackageReference Include="Titanium.Web.Proxy" Version="3.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\WPF-Controls\Source\Base\HeBianGu.Base.WpfBase\HeBianGu.Base.WpfBase.csproj" />
   </ItemGroup>
 
   <ItemGroup>

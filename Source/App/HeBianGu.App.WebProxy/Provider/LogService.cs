@@ -1,5 +1,4 @@
 ﻿using HeBianGu.Base.WpfBase;
-using HeBianGu.Control.MessageListBox;
 using System;
 
 namespace HeBianGu.App.WebProxy

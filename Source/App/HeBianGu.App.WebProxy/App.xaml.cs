@@ -1,13 +1,11 @@
 ﻿using HeBianGu.Base.WpfBase;
 using HeBianGu.Control.Guide;
-using HeBianGu.Control.MessageListBox;
 using HeBianGu.Control.ThemeSet;
 using HeBianGu.General.WpfControlLib;
 using HeBianGu.Service.Mvp;
 using HeBianGu.Systems.About;
 using HeBianGu.Systems.Feedback;
 using HeBianGu.Systems.Identity;
-using HeBianGu.Systems.License;
 using HeBianGu.Systems.Logger;
 using HeBianGu.Systems.Notification;
 using HeBianGu.Systems.Operation;
@@ -18,15 +16,10 @@ using HeBianGu.Systems.Survey;
 using HeBianGu.Systems.Upgrade;
 using HeBianGu.Systems.WinTool;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Media;
-using System.Xml.Linq;
-using System.Threading.Tasks;
 
 namespace HeBianGu.App.WebProxy
 {
@@ -68,7 +61,7 @@ namespace HeBianGu.App.WebProxy
             services.AddWindowDialog();
             services.AddObjectWindowDialog();
 
-            services.AddTheme();
+            services.AddThemeRightViewPresenter();
 
             services.AddIdentity();
             services.AddStart(x =>
@@ -76,8 +69,8 @@ namespace HeBianGu.App.WebProxy
                 x.ProductFontSize = 85;
             });
 
-            services.AddLicense();
-            services.AddVip();
+            //services.AddLicense();
+            //services.AddVip();
 
             services.AddProjectDefault();
 
@@ -88,11 +81,6 @@ namespace HeBianGu.App.WebProxy
 
             services.AddXmlSerialize();
             services.AddXmlMeta();
-            services.AddDESCryptService();
-            services.AddMvc();
-
-            services.AddWindowExplorer();
-            //var ps= typeof(LocationLayout).GetProperties(BindingFlags.Public | BindingFlags.Instance).ToList();
 
             #region - WindowMenu - 
 
@@ -201,25 +189,12 @@ namespace HeBianGu.App.WebProxy
             });
             #endregion
 
-            #region - WindowMessage -
-            services.AddInfoMessageViewPresenter();
-            services.AddErrorMessageViewPresenter();
-            services.AddWindowMessageViewPresenter(x =>
-            {
-                x.UseToolInStatus = true;
-                x.UseTool = false;
-                x.AddPersenter(InfoMessageViewPresenter.Instance);
-                x.AddPersenter(ErrorMessageViewPresenter.Instance);
-
-            });
-            #endregion
-
             #region - More -
             services.AddUpgradeViewPresenter();
-            services.AddLicense();
-            services.AddLicenseViewPresenter();
-            services.AddVip();
-            services.AddVipViewPresenter();
+            //services.AddLicense();
+            //services.AddLicenseViewPresenter();
+            //services.AddVip();
+            //services.AddVipViewPresenter();
             services.AddSurveyViewPresenter();
             services.AddFeedbackViewPresenter();
             //services.AddLogoutViewPresenter();
@@ -234,8 +209,8 @@ namespace HeBianGu.App.WebProxy
             services.AddMoreViewPresenter(x =>
             {
                 x.AddPersenter(UpgradeViewPresenter.Instance);
-                x.AddPersenter(LicenseViewPresenter.Instance);
-                x.AddPersenter(VipViewPresenter.Instance);
+                //x.AddPersenter(LicenseViewPresenter.Instance);
+                //x.AddPersenter(VipViewPresenter.Instance);
                 x.AddPersenter(SurveyViewPresenter.Instance);
                 x.AddPersenter(LogoutViewPresenter.Instance);
                 x.AddPersenter(FeedbackViewPresenter.Instance);
@@ -295,39 +270,10 @@ namespace HeBianGu.App.WebProxy
         protected override void Configure(IApplicationBuilder app)
         {
             base.Configure(app);
-
-            app.UseShapeDrawing(x =>
-            {
-                x.CanDrawMinLength = 2.0;
-                x.DefaultStrokeThickness = 0.1;
-            });
-
-            app.UseLayerBox(x =>
-            {
-
-            });
-
-            app.UseCoordinate(x =>
-            {
-                x.MaxScale = double.MaxValue;
-                x.MinScale = 0.001;
-                x.ScaleSensitivity = 1.1;
-            });
-
-            app.UseSetting(x=>
+            app.UseSetting(x =>
             {
                 x.Settings.Add(AppSetting.Instance);
             });
-
-            //app.UseApp();
-            //////  Do：注册Mvc模式
-            ////app.UseMvc();
-
-            //app.UseDiagram(x =>
-            //{
-            //    //x.SymbolDefaultBackground = Colors.Green;
-            //    //x.NodeDataDefaultStroke = Colors.Green;
-            //});
 
             //  Do：设置默认主题
             app.UseLocalTheme(l =>
@@ -348,40 +294,7 @@ namespace HeBianGu.App.WebProxy
                 l.AccentBrushType = AccentBrushType.LinearGradientBrush;
             });
 
-            //app.UseProject(l =>
-            //{
-            //    l.Extenstion = "wf";
-            //    l.SaveMode = ProjectSaveMode.OnProjectChanged;
-            //});
 
-            //app.UseSettingDefault();
-
-            //app.UseStart(l =>
-            //{
-            //    l.Title = "H图示";
-            //    l.ProductFontSize = 100;
-            //    l.Copyright = "Copyright © 2022 By HeBianGu";
-            //});
-
-            //app.UseIdentity(x =>
-            //{
-
-            //});
-
-            app.UseStyle(x =>
-            {
-
-            });
-
-            app.UseColorBox(x =>
-            {
-                x.From = 0;
-                x.To = 360;
-                x.Step = 48;
-                x.Depthes = new DoubleCollection(new double[] { 1.0, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1 });
-            });
-
-            //app.UseStart(l => l.Type = Window.Start.WindowType.Message);
         }
 
     }

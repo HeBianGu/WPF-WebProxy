@@ -64,11 +64,10 @@
                             Margin="0"
                             h:Cattach.Icon="{x:Static h:Icons.Redo}"
                             h:Cattach.IconSize="{DynamicResource {x:Static h:IconSizeKeys.Small}}"
-                            h:VipAttach.Level="1"
                             Style="{DynamicResource {x:Static h:ButtonKeys.AccentBackTransparent}}">
-                        <h:Interaction.Behaviors>
+                        <!--<h:Interaction.Behaviors>
                             <h:LoadedAdornerBehavior AdornerType="{x:Type h:VipAdorner}" />
-                        </h:Interaction.Behaviors>
+                        </h:Interaction.Behaviors>-->
                     </Button>
                 </DockPanel>
             </AdornerDecorator>
@@ -106,7 +105,9 @@
                       ShowButtons="True"
                       ShowSideButtons="True">
             <h:OutlookBar.Sections>
-                <h:OutlookSection h:Cattach.CornerRadius="0" h:Cattach.Icon="&#xe812;" Header="Projects">
+                <h:OutlookSection h:Cattach.CornerRadius="0"
+                                  h:Cattach.Icon="&#xe812;"
+                                  Header="Projects">
                     <h:ProjectListBox>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -127,7 +128,9 @@
                         </ItemsControl.ItemTemplate>
                     </h:ProjectListBox>
                 </h:OutlookSection>
-                <h:OutlookSection h:Cattach.CornerRadius="0" h:Cattach.Icon="&#xe7d4;" Header="Requests">
+                <h:OutlookSection h:Cattach.CornerRadius="0"
+                                  h:Cattach.Icon="&#xe7d4;"
+                                  Header="Requests">
                     <StackPanel>
                         <h:OdcExpander Margin="0"
                                        Header="Number of Buttons"
@@ -138,7 +141,8 @@
                                 <Button Margin="4">Show Fewer Buttons</Button>
                             </StackPanel>
                         </h:OdcExpander>
-                        <h:OdcExpander Margin="0" Header="Skins">
+                        <h:OdcExpander Margin="0"
+                                       Header="Skins">
                             <StackPanel>
                                 <Button Content="Outlook Blue" />
                                 <Button Content="Outlook Silver" />
@@ -149,7 +153,8 @@
                 </h:OutlookSection>
             </h:OutlookBar.Sections>
             <h:OutlookBar.OptionButtons>
-                <ToggleButton Width="100" Content="我是勾选按钮" />
+                <ToggleButton Width="100"
+                              Content="我是勾选按钮" />
                 <Button Width="100">我是按钮</Button>
             </h:OutlookBar.OptionButtons>
         </h:OutlookBar>
@@ -163,7 +168,8 @@
                       NavigationPaneText="{Binding RelativeSource={RelativeSource Mode=Self}, Path=SelectedSection.Header}"
                       ShowButtons="True">
             <h:OutlookBar.Sections>
-                <h:OutlookSection h:Cattach.Icon="&#xe786;" Header="OverView">
+                <h:OutlookSection h:Cattach.Icon="&#xe786;"
+                                  Header="OverView">
                     <ScrollViewer>
                         <ItemsControl>
                             <h:OdcExpander Margin="0"
@@ -202,7 +208,8 @@
                         </ItemsControl>
                     </ScrollViewer>
                 </h:OutlookSection>
-                <h:OutlookSection h:Cattach.Icon="&#xe787;" Header="Inspectors">
+                <h:OutlookSection h:Cattach.Icon="&#xe787;"
+                                  Header="Inspectors">
                     <UniformGrid Columns="1">
                         <GroupBox Margin="0,2"
                                   Padding="0"
@@ -243,8 +250,12 @@
                                               ItemsSource="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.Headers}"
                                               RowHeight="30">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Width="*" Binding="{Binding Name}" Header="Key" />
-                                            <DataGridTextColumn Width="*" Binding="{Binding Value}" Header="Value" />
+                                            <DataGridTextColumn Width="*"
+                                                                Binding="{Binding Name}"
+                                                                Header="Key" />
+                                            <DataGridTextColumn Width="*"
+                                                                Binding="{Binding Value}"
+                                                                Header="Value" />
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
@@ -277,12 +288,15 @@
                                         A SSLv3-compatible ClientHello handshake was found. Fiddler extracted the parameters below.
                                     </TextBlock>-->
                                     <ScrollViewer>
-                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request, IsAsync=True}" />
+                                        <TextBlock LineHeight="20"
+                                                   Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request, IsAsync=True}" />
                                     </ScrollViewer>
                                 </TabItem>
                                 <TabItem Header="Body">
                                     <ScrollViewer>
-                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.BodyString, IsAsync=True}" TextWrapping="Wrap" />
+                                        <TextBlock LineHeight="20"
+                                                   Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Request.BodyString, IsAsync=True}"
+                                                   TextWrapping="Wrap" />
                                     </ScrollViewer>
                                     <!--<TabControl h:Cattach.ItemHeight="Auto" h:Cattach.UseSearch="False" BorderThickness="0">
                                         <TabItem Header="Text">
@@ -334,8 +348,12 @@
                                               MinRowHeight="10"
                                               RowHeight="30">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Width="*" Binding="{Binding Name}" Header="Key" />
-                                            <DataGridTextColumn Width="*" Binding="{Binding Value}" Header="Value" />
+                                            <DataGridTextColumn Width="*"
+                                                                Binding="{Binding Name}"
+                                                                Header="Key" />
+                                            <DataGridTextColumn Width="*"
+                                                                Binding="{Binding Value}"
+                                                                Header="Value" />
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
@@ -357,12 +375,15 @@
                                 </TabItem>-->
                                 <TabItem Header="Raw">
                                     <ScrollViewer>
-                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Response, IsAsync=True}" />
+                                        <TextBlock LineHeight="20"
+                                                   Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Response, IsAsync=True}" />
                                     </ScrollViewer>
                                 </TabItem>
                                 <TabItem Header="Body">
                                     <ScrollViewer>
-                                        <TextBlock LineHeight="20" Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Response.BodyString, IsAsync=True}" TextWrapping="Wrap" />
+                                        <TextBlock LineHeight="20"
+                                                   Text="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.SelectedSession.HttpClient.Response.BodyString, IsAsync=True}"
+                                                   TextWrapping="Wrap" />
                                     </ScrollViewer>
                                 </TabItem>
                             </TabControl>
@@ -370,17 +391,23 @@
 
                     </UniformGrid>
                 </h:OutlookSection>
-                <h:OutlookSection h:Cattach.Icon="&#xe7f3;" Header="Triggers">
+                <h:OutlookSection h:Cattach.Icon="&#xe7f3;"
+                                  Header="Triggers">
                     <DockPanel>
-                        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
-                            <Button Style="{DynamicResource {x:Static h:ButtonKeys.AddCircle}}" DockPanel.Dock="Right"/>
-                            <CheckBox Content="全选" DockPanel.Dock="Left"/>
+                        <DockPanel DockPanel.Dock="Bottom"
+                                   LastChildFill="False">
+                            <Button DockPanel.Dock="Right"
+                                    Style="{DynamicResource {x:Static h:ButtonKeys.AddCircle}}" />
+                            <CheckBox Content="全选"
+                                      DockPanel.Dock="Left" />
                         </DockPanel>
                         <ItemsControl ItemsSource="{Binding Triggers}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel>
-                                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" ToolTip="{Binding Description}" />
+                                        <CheckBox Content="{Binding Name}"
+                                                  IsChecked="{Binding IsVisible}"
+                                                  ToolTip="{Binding Description}" />
                                     </DockPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -404,8 +431,11 @@
                                            FontSize="15"
                                            Style="{DynamicResource {x:Static h:TextBlockKeys.Icon}}"
                                            Text="{x:Static h:Icons.Eye}" />
-                                <TextBlock VerticalAlignment="Center" FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header6}}" Text="Live Traffic" />
-                                <TextBlock x:Name="tb_status" VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center"
+                                           FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header6}}"
+                                           Text="Live Traffic" />
+                                <TextBlock x:Name="tb_status"
+                                           VerticalAlignment="Center" />
                                 <Viewbox Height="15">
                                     <h:SwitchToggleButton IsChecked="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning, Mode=TwoWay}">
                                         <h:Interaction.Triggers>
@@ -420,11 +450,13 @@
                                 </Viewbox>
                             </DockPanel>
                             <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning}" Value="True">
+                                <DataTrigger Binding="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning}"
+                                             Value="True">
                                     <Setter TargetName="tb_status" Property="Text" Value="（Capturing）" />
                                     <Setter TargetName="tb_status" Property="Foreground" Value="{DynamicResource {x:Static h:BrushKeys.Green}}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning}" Value="False">
+                                <DataTrigger Binding="{Binding Source={StaticResource S.DataSource.Locator}, Path=ShellViewModel.IsRunning}"
+                                             Value="False">
                                     <Setter TargetName="tb_status" Property="Text" Value="（Paused）" />
                                     <Setter TargetName="tb_status" Property="Foreground" Value="{DynamicResource {x:Static h:BrushKeys.ForegroundAssist}}" />
                                 </DataTrigger>
@@ -438,7 +470,7 @@
                                    DockPanel.Dock="Top"
                                    LastChildFill="False">
 
-                            <ContentControl Content="{Binding Conditionable}"/>
+                            <ContentControl Content="{Binding Conditionable}" />
                             <!--<Button Width="100"
                                     Margin="1,0"
                                     h:Cattach.CornerRadius="{DynamicResource {x:Static h:CornerRadiusKeys.Left}}"
@@ -497,14 +529,22 @@
                                      Style="{DynamicResource {x:Static h:TextBoxKeys.Search}}"
                                      Text="{Binding ElementName=pdg, Path=FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                            <TextBlock Margin="5,0" VerticalAlignment="Center" DockPanel.Dock="Right">
+                            <TextBlock Margin="5,0"
+                                       VerticalAlignment="Center"
+                                       DockPanel.Dock="Right">
                                 <Run Text="Client Count" />
-                                <Run FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header5}}" Foreground="{DynamicResource {x:Static h:BrushKeys.Green}}" Text="{Binding ClientConnectionCount}" />
+                                <Run FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header5}}"
+                                     Foreground="{DynamicResource {x:Static h:BrushKeys.Green}}"
+                                     Text="{Binding ClientConnectionCount}" />
                             </TextBlock>
 
-                            <TextBlock Margin="5,0" VerticalAlignment="Center" DockPanel.Dock="Right">
+                            <TextBlock Margin="5,0"
+                                       VerticalAlignment="Center"
+                                       DockPanel.Dock="Right">
                                 <Run Text="Server Count" />
-                                <Run FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header5}}" Foreground="{DynamicResource {x:Static h:BrushKeys.Green}}" Text="{Binding ServerConnectionCount}" />
+                                <Run FontSize="{DynamicResource {x:Static h:FontSizeKeys.Header5}}"
+                                     Foreground="{DynamicResource {x:Static h:BrushKeys.Green}}"
+                                     Text="{Binding ServerConnectionCount}" />
                             </TextBlock>
                         </DockPanel>
 
@@ -514,7 +554,8 @@
                                PlacementTarget="{Binding ElementName=tb_more}"
                                StaysOpen="False"
                                VerticalOffset="10">
-                            <MenuItem Command="{Binding SaveProjectCommand}" Header="Save Project" />
+                            <MenuItem Command="{Binding SaveProjectCommand}"
+                                      Header="Save Project" />
                         </Popup>
 
                         <!--<Popup Height="Auto"
@@ -571,23 +612,40 @@
                                 <h:CheckBoxDataGridColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
                                     <h:CheckBoxDataGridColumn.HeaderTemplate>
                                         <DataTemplate>
-                                            <CheckBox Command="{x:Static h:Commander.CheckAll}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=h:PagedDataGrid}}" />
+                                            <CheckBox Command="{x:Static h:Commander.CheckAll}"
+                                                      CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                                                      CommandTarget="{Binding RelativeSource={RelativeSource AncestorType=h:PagedDataGrid}}" />
                                         </DataTemplate>
                                     </h:CheckBoxDataGridColumn.HeaderTemplate>
                                 </h:CheckBoxDataGridColumn>
-                                <h:RowNumTextDataGridColumn Width="50" Header="#" />
-                                <DataGridTextColumn Binding="{Binding Protocol}" Header="Protocol" />
-                                <DataGridTextColumn Binding="{Binding Method}" Header="Method" />
-                                <DataGridTextColumn Binding="{Binding Host}" Header="Host" />
-                                <DataGridTextColumn Binding="{Binding Url}" Header="Url" />
-                                <DataGridTextColumn Binding="{Binding StatusCode}" Header="Status Code" />
-                                <DataGridTextColumn Binding="{Binding BodySize}" Header="Body Size" />
-                                <DataGridTextColumn Binding="{Binding Process}" Header="Process" />
-                                <DataGridTextColumn Binding="{Binding SentDataCount}" Header="Sent Bytes" />
-                                <DataGridTextColumn Binding="{Binding ReceivedDataCount}" Header="ReceivedBytes" />
-                                <DataGridTextColumn Binding="{Binding ClientRemoteEndPoint}" Header="Client IP" />
-                                <DataGridTextColumn Binding="{Binding ClientConnectionId}" Header="Client Id" Visibility="Collapsed" />
-                                <DataGridTextColumn Binding="{Binding ServerConnectionId}" Header="Server Id" Visibility="Collapsed" />
+                                <h:RowNumTextDataGridColumn Width="50"
+                                                            Header="#" />
+                                <DataGridTextColumn Binding="{Binding Protocol}"
+                                                    Header="Protocol" />
+                                <DataGridTextColumn Binding="{Binding Method}"
+                                                    Header="Method" />
+                                <DataGridTextColumn Binding="{Binding Host}"
+                                                    Header="Host" />
+                                <DataGridTextColumn Binding="{Binding Url}"
+                                                    Header="Url" />
+                                <DataGridTextColumn Binding="{Binding StatusCode}"
+                                                    Header="Status Code" />
+                                <DataGridTextColumn Binding="{Binding BodySize}"
+                                                    Header="Body Size" />
+                                <DataGridTextColumn Binding="{Binding Process}"
+                                                    Header="Process" />
+                                <DataGridTextColumn Binding="{Binding SentDataCount}"
+                                                    Header="Sent Bytes" />
+                                <DataGridTextColumn Binding="{Binding ReceivedDataCount}"
+                                                    Header="ReceivedBytes" />
+                                <DataGridTextColumn Binding="{Binding ClientRemoteEndPoint}"
+                                                    Header="Client IP" />
+                                <DataGridTextColumn Binding="{Binding ClientConnectionId}"
+                                                    Header="Client Id"
+                                                    Visibility="Collapsed" />
+                                <DataGridTextColumn Binding="{Binding ServerConnectionId}"
+                                                    Header="Server Id"
+                                                    Visibility="Collapsed" />
                             </DataGrid.Columns>
                         </h:PagedDataGrid>
                     </DockPanel>
